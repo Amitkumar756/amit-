@@ -1,0 +1,27 @@
+all pair problem 
+public class recurs {
+       
+    // 1. arr ko int[] kiya
+    public static void allpair(int[] arr, int r, String str, int index) {
+        // Base Case: Jab 3 numbers mil jayein
+       
+        if (r == 3) {
+            System.out.println(str);
+            return;
+        }
+
+        // Loop array ke elements par iterate karne ke liye
+        for (int i =index; i < arr.length; i++) {
+            // r+1 se recursion aage badhega
+            // i+1 ensures ki hum agla element pick karein
+            allpair(arr, r + 1, str + arr[i] + " ", i+1);
+        }
+        
+    }
+
+    public static void main(String[] args) {
+        int arr[] = {1,2, 3,4,};
+        // Shuruat 0 count aur 0 index se
+        allpair(arr, 0, "", 0);
+    }
+}
