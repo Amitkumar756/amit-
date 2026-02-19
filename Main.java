@@ -1,42 +1,51 @@
+import java.util.*;
 
 public class Main {
-    public static void Maze(int matrix[][], int row, int temp[][]){
+    public static void main(String args[]){
+        int start [] = {1,3,0,5,8,5};
+        int end [] = {2,4,6,7,9,9};
         
-        if(row==matrix.length){
-            print(temp);
-            return;
-            
+        //sorting end time wise
+        /*here we are using a 2D array sort */
+
+        // a table of 3 coloums 
+        /* 
+         1st coloum will save the index of the number
+         2nd coloum Will save start 
+         3rd will save the end so
+         we will sort by 3rd coloum
+         */
+        int activities[][] = new int[start.length][3];
+        for(int i = 0; i< start.length; i++){
+            activities[i][0] = i; //index
+            activities[i][1] = start[i];
+            activities[i][2] = end[i];
         }
         
-        for(int j=0;j<matrix.length;j++){
-            if(matrix[row][j]==1){
-                temp [row][j]= 1;
-                
-            }else{
-                temp [row][j]= 0;
-                 
+        //lambda function -> sortform
+        Arrays.sort(activities, Comparator.comparingDouble(o -> o[2])); //here 2 is showing coloum no. three
+
+        //end time basis soted
+
+        int maxAct = 0;
+        ArrayList <Integer> ans = new ArrayList<>();
+
+        //1at activity
+        maxAct = 1;//because at list one activity will be performed
+        ans.add(activities[0][0]);
+        int lastEnd = activities[0][2];
+        for(int i = 0; i<end.length; i++){
+            if(activities[i][1]>= lastEnd){
+                maxAct++;
+                ans.add(activities[i][0]);
+                lastEnd = activities[i][2];
             }
-            
         }
-        Maze(matrix , row+1, temp);
-    }
-    public static void print(int temp[][]){
-        for(int i=0;i<temp.length;i++){
-        for(int j=0;j<temp[i].length;j++){
-            System.out.print(temp[i][j]+ " ");
-            
-        }
-            System.out.println();
-        }
-    }
-    
-    public static void main(String[] args) {
         
-        int matrix[][]={ { 1, 0, 0, 0 },{ 1, 1, 0, 1 },{ 0, 1, 0, 0 },{ 1, 1, 1, 1 } };
-        int n = matrix.length;
-        int temp [][]= new int[n][n];
-        Maze(matrix,0,temp);
-        
+        System.out.println("Max actvity = "+maxAct);
+        for(int i = 0; i< ans.size(); i++){
+            System.out.print("A"+ans.get(i)+" ");
+        }
     }
     
 }
